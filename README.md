@@ -17,7 +17,7 @@ Make a request token:
 
 Use auth_url to get a PIN:
 
-    	PIN = z.GetPIN(auth_url)
+    PIN = z.GetPIN(auth_url)
 
 Use the PIN to get an access token:
 
