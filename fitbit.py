@@ -7,19 +7,33 @@ Most of the code has been adapted from: https://groups.google.com/group/fitbit-a
 """
 import os, httplib 
 from oauth import oauth 
-
+from bs4 import BeautifulSoup
+from mechanize import Browser
 
 # pass oauth request to server (use httplib.connection passed in as param) 
 # return response as a string 
 class FitBit():
     CONSUMER_KEY    = 'ADD_YOUR_CONSUMER_KEY' 
     CONSUMER_SECRET = 'ADD_YOUR_CONSUMER_SECRET' 
+    USERNAME        = 'ADD_YOUR_EMAIL_ADDRESS'
+    PASSWORD        = 'ADD_YOUR_PASSWORD'
     SERVER = 'api.fitbit.com' 
     REQUEST_TOKEN_URL = 'http://%s/oauth/request_token' % SERVER 
     ACCESS_TOKEN_URL = 'http://%s/oauth/access_token' % SERVER 
     AUTHORIZATION_URL = 'http://%s/oauth/authorize' % SERVER 
     DEBUG = False
     
+    def GetPIN(self, auth_url):
+        br = Browser()
+        br.open(auth_url)
+        br.select_form(nr=0)
+        br['email'] = self.USERNAME
+        br['password'] = self.PASSWORD
+        response = br.submit("oauth_login_allow")
+        html = response.read()
+        soup = BeautifulSoup(html)
+        return str(soup.findAll('h2')[1].text)
+
     def FetchResponse(self, oauth_request, connection, debug=DEBUG): 
         url = oauth_request.to_url() 
         connection.request(oauth_request.http_method,url) 
