@@ -1,7 +1,9 @@
 # A python library for the FitBit API
 
-Forked from jplattel/FitBit.py in order to automate getting the PIN, 
-for personal use.  This will break if FitBit's HTML changes.
+Forked from mrwz/FitBit.py and jplattel/FitBit.py .
+No need to store id and password in code. 
+Type id and passworld of fitbit account is all you need to get the PIN.
+This will break if FitBit's HTML changes as follows mrwz's.
 
 ## Usage
 
@@ -15,7 +17,7 @@ Make a request token:
 
 	auth_url, auth_token = z.GetRequestToken()
 
-Use auth_url to get a PIN:
+Use auth_url to get a PIN: (Type id and passworld manually)
 
     PIN = z.GetPIN(auth_url)
 
