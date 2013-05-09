@@ -6,6 +6,7 @@ This library provides a wrapper to the FitBit API and does not provide storage o
 Most of the code has been adapted from: https://groups.google.com/group/fitbit-api/browse_thread/thread/0a45d0ebed3ebccb
 """
 import os, httplib 
+import getpass
 from oauth import oauth 
 from bs4 import BeautifulSoup
 from mechanize import Browser
@@ -15,8 +16,6 @@ from mechanize import Browser
 class FitBit():
     CONSUMER_KEY    = 'ADD_YOUR_CONSUMER_KEY' 
     CONSUMER_SECRET = 'ADD_YOUR_CONSUMER_SECRET' 
-    USERNAME        = 'ADD_YOUR_EMAIL_ADDRESS'
-    PASSWORD        = 'ADD_YOUR_PASSWORD'
     SERVER = 'api.fitbit.com' 
     REQUEST_TOKEN_URL = 'http://%s/oauth/request_token' % SERVER 
     ACCESS_TOKEN_URL = 'http://%s/oauth/access_token' % SERVER 
@@ -27,8 +26,8 @@ class FitBit():
         br = Browser()
         br.open(auth_url)
         br.select_form(nr=0)
-        br['email'] = self.USERNAME
-        br['password'] = self.PASSWORD
+        br['email'] = raw_input('Username:')
+        br['password'] = getpass.getpass()
         response = br.submit("oauth_login_allow")
         html = response.read()
         soup = BeautifulSoup(html)
